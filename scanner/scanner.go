@@ -12,6 +12,12 @@ type Scanner struct {
 	events   []Event
 }
 
+func NewScanner(todoList *todo.List) *Scanner {
+	return &Scanner{
+		todoList: todoList,
+	}
+}
+
 func (s *Scanner) Init() {
 
 	scanner := bufio.NewScanner(os.Stdin)
@@ -34,6 +40,7 @@ func (s *Scanner) Init() {
 				return
 			}
 
+			printResult(result)
 		}
 
 		event := NewEvent(result, input)
@@ -71,10 +78,14 @@ func (s *Scanner) stringHandler(str string) string {
 	}
 
 	if cmd == "help" {
-		return
+		return s.cmdHelp(fields)
 	}
 
-	return ""
+	if cmd == "events" {
+		return s.cmdEvents(fields)
+	}
+
+	return unknownCommand
 }
 
 func (s *Scanner) cmdAdd(fields []string) string {
@@ -155,6 +166,20 @@ func (s *Scanner) cmdHelp(fields []string) string {
 	}
 
 	printHelp()
+
+	return ""
+}
+
+func (s *Scanner) cmdEvents(fields []string) string {
+	if len(fields) != 1 {
+		return argumentsError
+	}
+
+	if len(s.events) == 0 {
+		return "empty events"
+	}
+
+	printEvents(s.events)
 
 	return ""
 }

@@ -39,3 +39,14 @@ func printHelp() {
 	fmt.Println("Commands:\nadd {title} {text ...}\ndelete {title}\nlist\ndone {title}\nexit")
 	fmt.Println()
 }
+
+func printEvents(events []Event) {
+	pp.Println("Events: ", events)
+	fmt.Println()
+}
+
+func printResult(result string) {
+	fmt.Println("Result after enter command: ", result)
+	fmt.Println()
+}
+
