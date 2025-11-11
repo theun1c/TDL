@@ -35,3 +35,7 @@ func printDelete(title string) {
 	fmt.Println()
 }
 
+func printHelp() {
+	fmt.Println("Commands:\nadd {title} {text ...}\ndelete {title}\nlist\ndone {title}\nexit")
+	fmt.Println()
+}

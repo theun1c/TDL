@@ -9,6 +9,7 @@ import (
 
 type Scanner struct {
 	todoList *todo.List
+	events   []Event
 }
 
 func (s *Scanner) Init() {
@@ -24,9 +25,9 @@ func (s *Scanner) Init() {
 			return
 		}
 
-		str := scanner.Text()
+		input := scanner.Text()
 
-		result := s.stringHandler(str)
+		result := s.stringHandler(input)
 		if result != emptyString {
 			if result == exitCall {
 				printExit()
@@ -34,6 +35,9 @@ func (s *Scanner) Init() {
 			}
 
 		}
+
+		event := NewEvent(result, input)
+		s.events = append(s.events, event)
 	}
 }
 
@@ -64,6 +68,10 @@ func (s *Scanner) stringHandler(str string) string {
 
 	if cmd == "delete" {
 		return s.cmdDelete(fields)
+	}
+
+	if cmd == "help" {
+		return
 	}
 
 	return ""
@@ -139,4 +147,14 @@ func (s *Scanner) cmdDelete(fields []string) string {
 
 	return ""
 
+}
+
+func (s *Scanner) cmdHelp(fields []string) string {
+	if len(fields) != 1 {
+		return argumentsError
+	}
+
+	printHelp()
+
+	return ""
 }
