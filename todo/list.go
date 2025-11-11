@@ -9,6 +9,12 @@ type List struct {
 	tasks map[string]Task
 }
 
+func NewList() *List {
+	return &List{
+		tasks: make(map[string]Task),
+	}
+}
+
 // с точки зрения принципа разделения ответственности
 // лучше всего в методы листа передавать уже созданную из вне задачу
 // вместо передачи параметров текста и заголовка внутри методов
@@ -84,7 +90,6 @@ func (l *List) DoneTask(title string) string {
 // возвращать так мапу чревато какими-либо последствиями
 //
 // нужно нагуглить проблему
-func (l *List) GetTask() map[string]Task {
+func (l *List) GetTasks() map[string]Task {
 	return l.tasks
 }
-
